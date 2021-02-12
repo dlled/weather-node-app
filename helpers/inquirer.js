@@ -37,22 +37,27 @@ const inquirerMenu = async() => {
     return option;
 }
 
-const deleteMenu = async(tareas = []) => {
-    const myChoices = tareas.map((tarea) => {
+const listPlaces = async(places = []) => {
+    const myPlaces = places.map((place, i) => {
         return {
-            value: tarea.id,
-            name: tarea.desc
+            value: place.id,
+            name: `${i + 1}.`.green + ' ' + place.name
         }
     })
-    const preguntas = [
+
+    myPlaces.unshift({
+        value: '0',
+        name: '0.'.green + ' Cancelar'
+    })
+    const prompt_places = [
         {
             type: 'list',
             name: 'id',
-            message: 'Borrar',
-            choices: myChoices
+            message: 'Seleccione lugar',
+            choices: myPlaces
         }
     ]
-    const {id} = await inquirer.prompt(preguntas);
+    const {id} = await inquirer.prompt(prompt_places);
     return id;
 };
 
@@ -128,7 +133,7 @@ module.exports = {
     inquirerMenu,
     inquirerPause,
     leerInput,
-    deleteMenu,
+    listPlaces,
     confirmDelete,
     completionList
 }
