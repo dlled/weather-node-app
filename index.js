@@ -27,7 +27,11 @@ const main = async() => {
 
                 const election = await listPlaces(search_results);
 
+                if (election === '0') continue;
+
                 const selectedPlace = search_results.filter((place) => place.id === election)[0];
+
+                search.makeHistorial(selectedPlace.name);
 
                 const data = await search.weather(selectedPlace.lat, selectedPlace.lng);
 
@@ -42,12 +46,15 @@ const main = async() => {
                 console.log('Máxima: '.red, data.max);
                 console.log('Humedad: '.blue, data.humidity)
 
-
-
                 break;
             case 2:
-                console.log('Historial');
-                break;
+
+            search.historial.forEach((place, i) => {
+                console.log(`${i+1}`.green, ` ${place}`.red)
+            })
+            
+
+            break;
             case 0:
                 console.log('Salir de la aplicación');
                 break;
